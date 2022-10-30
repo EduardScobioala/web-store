@@ -1,0 +1,15 @@
+<h2>New Customer</h2>
+<form action="/customers" method="POST">
+
+    <label>Card Number</label>
+    <input type="text" name="cardNumber" value="<%= customer.cardNumber %>">
+    <label>Last Name</label>
+    <input type="text" name="lastName" value="<%= customer.lastName %>">
+    <label>First Name</label>
+    <input type="text" name="firstName" value="<%= customer.firstName %>">
+    <label>Date of Birth</label>
+    <input type="text" name="dateOfBirth" value="<%= customer.dateOfBirth %>">
+
+    <a href="/customers">Cancel</a>
+    <button type="submit">Create</button>
+</form>
