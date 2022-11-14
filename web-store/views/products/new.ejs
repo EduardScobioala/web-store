@@ -1,0 +1,17 @@
+<h2>New Product</h2>
+<form action="/products" method="POST">
+
+    <label>Product ID</label>
+    <input type="text" name="productId" value="<%= product.productId %>">
+    <label>Product Name</label>
+    <input type="text" name="product" value="<%= product.product %>">
+    <label>Warranty</label>
+    <input type="text" name="warranty" value="<%= product.warranty %>">
+    <label>Stock</label>
+    <input type="text" name="stock" value="<%= product.stock %>">
+    <label>Price</label>
+    <input type="text" name="price" value="<%= product.price %>">
+
+    <a href="/products">Cancel</a>
+    <button type="submit">Create</button>
+</form>

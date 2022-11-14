@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 
 const indexRouter = require("./routes/index");
 const clientsRouter = require("./routes/customer");
+const productsRouter = require("./routes/product");
 
 // layout/views setup
 app.set("view engine", "ejs");
@@ -32,6 +33,7 @@ db.once("open", () => console.log("Connected to Mongoose..."));
 // main router
 app.use("/app", indexRouter);
 app.use("/customers", clientsRouter);
+app.use("/products", productsRouter);
 
 app.listen(process.env.PORT || 8080, () => {
     console.log("Listening on port 8080...");

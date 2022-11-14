@@ -1,1 +1,15 @@
-All Customers
+<h2>Search Customers</h2>
+<form action="/customers" method="GET">
+    <label>Name</label>
+    <input type="text" name="lastName" value="<%= searchOptions.lastName %> ">
+    <button type="submit">Search</button>
+</form>
+<br>
+<% customers.forEach(customer => { %>
+     <div>
+        <%= customer.cardNumber %>
+        <%= customer.lastName %>
+        <%= customer.firstName %>
+        <%= customer.dateOfBirth %>
+    </div>
+<% }) %>
