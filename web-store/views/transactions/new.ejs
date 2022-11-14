@@ -1,0 +1,15 @@
+<h2>New Transaction</h2>
+<form action="/transactions" method="POST">
+
+    <label>Card Number</label>
+    <input type="text" name="cardNumber" value="<%= transaction.cardNumber %>">
+    <label>Product ID</label>
+    <input type="text" name="productId" value="<%= transaction.productId %>">
+    <label>Quantity</label>
+    <input type="text" name="quantity" value="<%= transaction.quantity %>">
+    <label>Date Of Transaction</label>
+    <input type="text" name="dateOfTransaction" value="<%= transaction.dateOfTransaction %>">
+
+    <a href="/transactions">Cancel</a>
+    <button type="submit">Create</button>
+</form>
