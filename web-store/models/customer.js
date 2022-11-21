@@ -8,16 +8,17 @@ const customerSchema = new mongoose.Schema({
     },
     lastName: {
         type : String,
-        maxLength: 30,
+        maxLength: 20,
         required: true
     },
     firstName: {
         type : String,
-        maxLength: 30,
+        maxLength: 20,
         required: true
     },
     dateOfBirth: {
-        type : Date,
+        type : String,
+        maxLength: 15,
         required: true
     }
 })
