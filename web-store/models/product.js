@@ -6,9 +6,9 @@ const productSchema = new mongoose.Schema({
         maxLength: 8,
         required: true,
     },
-    product: {
+    productName: {
         type : String,
-        maxLength: 80,
+        maxLength: 30,
         required: true
     },
     warranty: {

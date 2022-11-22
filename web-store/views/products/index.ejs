@@ -1,14 +1,14 @@
 <h2>Search Products</h2>
 <form action="/products" method="GET">
     <label>Name</label>
-    <input type="text" name="product" value="<%= searchOptions.product %> ">
+    <input type="text" name="product" value="<%= searchOptions.productName %> ">
     <button type="submit">Search</button>
 </form>
 <br>
 <% products.forEach(product => { %>
      <div>
         <%= product.productId %>
-        <%= product.product %>
+        <%= product.productName %>
         <%= product.warranty %>
         <%= product.stock %>
         <%= product.price %>

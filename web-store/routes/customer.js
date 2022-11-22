@@ -26,22 +26,21 @@ router.get("/new", (req, res) => {
 
 // Create Customer route
 router.post("/", async (req, res) => {
-    
-    let customer = new Customer({
+    const rawCustomer = {
         cardNumber : req.body.cardNumber,
         lastName : req.body.lastName,
         firstName : req.body.firstName,
         dateOfBirth : req.body.dateOfBirth
-    });
+    };
 
+    let customer;
     try {
-        customer = _dataValidation(customer);
+        customer = new Customer(_dataValidation(rawCustomer));
         const newCustomer = await customer.save();
         res.redirect("customers");
     } catch(error) {
-        console.log(error.message);
         res.render("customers/new", {
-            customer : customer,
+            customer : rawCustomer,
             errorMessage : error.message
         });
     }
