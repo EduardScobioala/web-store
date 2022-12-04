@@ -1,18 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const Customer = require("../models/customer");
+const Customer = require("../models/Customer.class");
 
 // All Customers route
 router.get("/", async (req, res) => {
     const searchOptions = {};
     if (req.query.lastName != null && req.query.lastName !== "") {
-        searchOptions.lastName = new RegExp(req.query.lastName.trim(), "i");
+        searchOptions.lastName = req.query.lastName.trim();
     }
     try {
-        const customers = await Customer.find(searchOptions);
+        const customers = await Customer.getCustomers(searchOptions);
+
         res.render("customers/index", {
             customers : customers,
-            searchOptions : req.query
+            searchOptions : searchOptions
         });
     } catch {
         res.redirect("/");
@@ -21,7 +22,13 @@ router.get("/", async (req, res) => {
 
 // New Customer route
 router.get("/new", (req, res) => {
-    res.render("customers/new", { customer: new Customer() });
+    const customer = {
+        cardNumber: "",
+        lastName: "",
+        firstName: "",
+        dateOfBirth: ""
+    }
+    res.render("customers/new", { customer });
 });
 
 // Create Customer route
@@ -35,8 +42,9 @@ router.post("/", async (req, res) => {
 
     let customer;
     try {
-        customer = new Customer(_dataValidation(rawCustomer));
-        const newCustomer = await customer.save();
+        customer = _dataValidation(rawCustomer);
+        await Customer.saveCustomer(customer);
+
         res.redirect("customers");
     } catch(error) {
         res.render("customers/new", {

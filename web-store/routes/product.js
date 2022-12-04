@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/product");
+const Product = require("../models/Product.class");
 
 // All Product route
 router.get("/", async (req, res) => {
@@ -9,7 +9,8 @@ router.get("/", async (req, res) => {
         searchOptions.productName = new RegExp(req.query.product.trim(), "i");
     }
     try {
-        const products = await Product.find(searchOptions);
+        const products = await Product.getProducts(searchOptions);
+        
         res.render("products/index", {
             products : products,
             searchOptions : req.query

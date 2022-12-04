@@ -5,11 +5,11 @@
     <button type="submit">Search</button>
 </form>
 <br>
-<% customers.forEach(customer => { %>
+<% for(let i = 0; i < customers.length; i++) { %>
      <div>
-        <%= customer.cardNumber %>
-        <%= customer.lastName %>
-        <%= customer.firstName %>
-        <%= customer.dateOfBirth %>
+        <%= customers[i].cardNumber %>
+        <%= customers[i].lastName %>
+        <%= customers[i].firstName %>
+        <%= customers[i].dateOfBirth %>
     </div>
-<% }) %>
+<% } %>

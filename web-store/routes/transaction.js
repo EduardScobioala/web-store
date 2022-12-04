@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 
 // New Transaction route
 router.get("/new", (req, res) => {
-    res.render("transactions/new", { transaction: new Transaction() });
+    //res.render("transactions/new", { transaction: new Transaction() });
 });
 
 // Create Transaction route
