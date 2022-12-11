@@ -1,15 +1,15 @@
 <h2>Search Transactions</h2>
 <form action="/transactions" method="GET">
     <label>Name</label>
-    <input type="text" name="transaction" value="<%= searchOptions.transaction %> ">
+    <input type="text" name="productId" value="<%= searchOptions.productId %> ">
     <button type="submit">Search</button>
 </form>
 <br>
-<% transactions.forEach(transaction => { %>
-     <div>
-        <%= transaction.cardNumber %>
-        <%= transaction.productId %>
-        <%= transaction.quantity %>
-        <%= transaction.dateOfTransaction %>
-    </div>
-<% }) %>
+<% for(let i = 0; i < transactions.length; i++) { %>
+    <div>
+       <%= transactions[i].cardNumber %>
+       <%= transactions[i].productId %>
+       <%= transactions[i].quantity %>
+       <%= transactions[i].dateOfTransaction %>
+   </div>
+<% } %>

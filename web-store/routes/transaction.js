@@ -1,18 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const Transaction = require("../models/transaction");
+const Transaction = require("../models/Transaction.class");
 
 // All Transactions route
 router.get("/", async (req, res) => {
     const searchOptions = {};
-    if (req.query.transaction != null && req.query.transaction !== "") {
-        searchOptions.transaction = new RegExp(req.query.transaction.trim(), "i");
+    if (req.query.productId != null && req.query.productId !== "") {
+        searchOptions.productId = req.query.productId.trim();
     }
     try {
-        const transactions = await Transaction.find(searchOptions);
+        const transactions = await Transaction.getTransactions(searchOptions);
+
         res.render("transactions/index", {
             transactions : transactions,
-            searchOptions : req.query
+            searchOptions : searchOptions
         });
     } catch {
         res.redirect("/");
@@ -20,8 +21,17 @@ router.get("/", async (req, res) => {
 });
 
 // New Transaction route
-router.get("/new", (req, res) => {
-    //res.render("transactions/new", { transaction: new Transaction() });
+router.get("/new", async (req, res) => {
+    const cardNumbers = await Transaction.getCardNumbers();
+    const productIds = await Transaction.getProductId();
+    const transaction = {
+        cardNumber: "",
+        productId: "",
+        quantity: "",
+        dateOfTransaction: ""
+    }
+
+    res.render("transactions/new", { cardNumbers, productIds, transaction });
 });
 
 // Create Transaction route
@@ -32,33 +42,26 @@ router.post("/", async (req, res) => {
         quantity : req.body.quantity,
         dateOfTransaction : req.body.dateOfTransaction
     };
+    const cardNumbers = await Transaction.getCardNumbers();
+    const productIds = await Transaction.getProductId();
 
     let transaction;
     try {
-        transaction = new Transaction(_dataValidation(rawTransaction));
-        const newTransaction = await transaction.save();
+        transaction = _dataValidation(rawTransaction);
+        await Transaction.saveTransaction(transaction);
+
         res.redirect("transactions");
     } catch(error) {
         res.render("transactions/new", {
-            transaction : rawTransaction,
-            errorMessage : error.message
+            cardNumbers: cardNumbers,
+            productIds: productIds,
+            transaction: rawTransaction,
+            errorMessage: error.message
         });
     }
 });
 
 function _dataValidation(transaction) {
-    // Card Number validation
-    transaction.cardNumber = transaction.cardNumber.trim();
-    if (transaction.cardNumber.length == 0 ) throw Error("Card Number field mandatory");
-    if (transaction.cardNumber.length != 8) throw Error("Card Number field must be of 8 characters");
-    if (!/^\d+$/.test(transaction.cardNumber)) throw Error("Card Number field can be made out of only digits");
-
-    // Product ID validation
-    transaction.productId = transaction.productId.trim();
-    if (transaction.productId.length == 0 ) throw Error("Product ID field mandatory");
-    if (transaction.productId.length != 8) throw Error("Product ID field must be of 8 characters");
-    if (!/^[a-zA-Z0-9]+$/.test(transaction.productId)) throw Error("Product ID field can be made out of only digits or letters");
-
     // Quantity validation
     if ((transaction.quantity.trim()).length == 0 ) throw Error("Quantity field mandatory");
     if (!/^[0-9]+$/.test(transaction.quantity)) throw Error("Quantity field can be made out of only digits");

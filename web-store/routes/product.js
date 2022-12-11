@@ -5,15 +5,15 @@ const Product = require("../models/Product.class");
 // All Product route
 router.get("/", async (req, res) => {
     const searchOptions = {};
-    if (req.query.productName != null && req.query.productName !== "") {
-        searchOptions.productName = new RegExp(req.query.product.trim(), "i");
+    if (req.query.name != null && req.query.name !== "") {
+        searchOptions.name = req.query.name.trim();
     }
     try {
         const products = await Product.getProducts(searchOptions);
         
         res.render("products/index", {
             products : products,
-            searchOptions : req.query
+            searchOptions : searchOptions
         });
     } catch {
         res.redirect("/");
@@ -22,14 +22,21 @@ router.get("/", async (req, res) => {
 
 // New Product route
 router.get("/new", (req, res) => {
-    res.render("products/new", { product: new Product() });
+    const product = {
+        productId: "",
+        name: "",
+        warranty: "",
+        stock: "",
+        price: ""
+    }
+    res.render("products/new", { product });
 });
 
 // Create Product route
 router.post("/", async (req, res) => {
     const rawProduct = {
         productId : req.body.productId,
-        productName : req.body.productName,
+        name : req.body.name,
         warranty : req.body.warranty,
         stock : req.body.stock,
         price : req.body.price
@@ -37,8 +44,9 @@ router.post("/", async (req, res) => {
 
     let product;
     try {
-        product = new Product(_dataValidation(rawProduct));
-        const newProduct = await product.save();
+        product = _dataValidation(rawProduct);
+        await Product.saveProduct(product);
+
         res.redirect("products");
     } catch(error) {
         console.log(error)
@@ -57,10 +65,10 @@ function _dataValidation(product) {
     if (!/^[a-zA-Z0-9]+$/.test(product.productId)) throw Error("Product ID field can be made out of only digits or letters");
 
     // Product Name validation
-    product.productName = product.productName.trim();
-    if (product.productName.length == 0 ) throw Error("Product Name field mandatory");
-    if (product.productName.length > 30) throw Error("Product Name field must not exceed 30 characters");
-    if (!/^[a-zA-Z0-9-]+$/.test(product.productName)) throw Error("Product Name field can be made out of only letters");
+    product.name = product.name.trim();
+    if (product.name.length == 0 ) throw Error("Product Name field mandatory");
+    if (product.name.length > 30) throw Error("Product Name field must not exceed 30 characters");
+    if (!/^[a-zA-Z0-9- ]+$/.test(product.name)) throw Error("Product Name field can be made out of only letters");
 
     // Warranty validation
     if ((product.warranty.trim()).length == 0 ) throw Error("Warranty field mandatory");
@@ -81,6 +89,5 @@ function _dataValidation(product) {
 
     return product;
 }
-
 
 module.exports = router;

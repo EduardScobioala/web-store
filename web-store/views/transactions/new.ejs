@@ -2,9 +2,19 @@
 <form action="/transactions" method="POST">
 
     <label>Card Number</label>
-    <input type="text" name="cardNumber" value="<%= transaction.cardNumber %>">
+    <select name="cardNumber">
+        <% for ( let i = 0; i < cardNumbers.length; i++ ) { %>
+            <option> <%= cardNumbers[i].cardNumber %> </option>
+        <% } %>
+    </select>
+
     <label>Product ID</label>
-    <input type="text" name="productId" value="<%= transaction.productId %>">
+    <select name="productId">
+        <% for ( let i = 0; i < productIds.length; i++ ) { %>
+            <option> <%= productIds[i].productId %> </option>
+        <% } %>
+    </select>
+
     <label>Quantity</label>
     <input type="text" name="quantity" value="<%= transaction.quantity %>">
     <label>Date Of Transaction</label>

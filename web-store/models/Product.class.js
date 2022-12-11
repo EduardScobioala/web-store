@@ -17,14 +17,14 @@ class Product {
         return await db.runQuery(sql, params);
     }
 
-    static async saveCustomer(customer) {
+    static async saveProduct(product) {
         const db = new DBManager;
 
-        const sql = "INSERT INTO customer (cardNumber, lastName, firstName, dateOfBirth) VALUES (?, ?, ?, ?)";
-        const params = [customer.cardNumber, customer.lastName, customer.firstName, customer.dateOfBirth];
+        const sql = "INSERT INTO product (productId, name, warranty, stock, price) VALUES (?, ?, ?, ?, ?)";
+        const params = [product.productId, product.name, product.warranty, product.stock, product.price];
 
         return await db.runQuery(sql, params);
     }
 }
 
-module.exports = Customer;
+module.exports = Product;
