@@ -52,6 +52,7 @@ router.post("/", async (req, res) => {
 
         res.redirect("transactions");
     } catch(error) {
+        rawTransaction.dateOfTransaction = "";
         res.render("transactions/new", {
             cardNumbers: cardNumbers,
             productIds: productIds,
@@ -72,8 +73,6 @@ function _dataValidation(transaction) {
     transaction.dateOfTransaction = transaction.dateOfTransaction.trim();
     if (transaction.dateOfTransaction.length == 0 ) throw Error("Date of Transaction field mandatory");
     if (!/^\d{1,2}.\d{1,2}.\d{4}$/.test(transaction.dateOfTransaction)) throw Error("Date of Transaction field format 'dd/mm/yyyy' or 'dd.mm.yyyy'");
-    const [day, month,  year] = transaction.dateOfTransaction.split('.');
-    transaction.dateOfTransaction = new Date(year, month - 1, day);
 
     return transaction;
 }

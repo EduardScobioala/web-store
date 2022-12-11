@@ -20,11 +20,18 @@ class Transaction {
     static async saveTransaction(transaction) {
         const db = new DBManager;
 
-        console.log(transaction.cardNumber, transaction.productId, transaction.quantity, transaction.dateOfTransaction);
-        const sql = "INSERT INTO transaction (cardNumber, productId, quantity, dateOfTransaction) VALUES (?, ?, ?, ?)";
-        const params = [transaction.cardNumber, transaction.productId, transaction.quantity, transaction.dateOfTransaction];
+        let sql = "SELECT stock FROM product WHERE productId = ?";
+        let params = [transaction.productId];
 
-        return await db.runQuery(sql, params);
+        const quantity = await db.runQuery(sql, params);
+        
+        if (transaction.quantity <= quantity[0].stock) {
+            sql = "INSERT INTO transaction (cardNumber, productId, quantity, dateOfTransaction) VALUES (?, ?, ?, ?)";
+            params = [transaction.cardNumber, transaction.productId, transaction.quantity, transaction.dateOfTransaction];
+            return await db.runQuery(sql, params);
+        } else {
+            throw new Error(`The stock is limited to a maximum of ${quantity[0].stock} units.`)
+        }
     }
 
     static async getCardNumbers() {
