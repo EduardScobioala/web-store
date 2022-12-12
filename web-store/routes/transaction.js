@@ -62,6 +62,70 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.get("/person", async (req, res) => {
+    const searchOptions = {};
+    if (req.query.name != null && req.query.name !== "") {
+        searchOptions.name = req.query.name.trim();
+    }
+    try {
+        const transactions = await Transaction.getTransactionsByPerson(searchOptions);
+
+        res.render("statistics/transactionsByPerson", {
+            transactions : transactions,
+            searchOptions : searchOptions
+        });
+    } catch(error) {
+        res.redirect("/");
+    }
+});
+
+router.get("/warranty", async (req, res) => {
+    try {
+        const products = await Transaction.getProductsWithActiveWarranty();
+
+        res.render("statistics/activeWarranty", {
+            products : products
+        });
+    } catch(error) {
+        console.log(error.message);
+        res.redirect("/");
+    }
+});
+
+router.get("/quantity", async (req, res) => {
+    try {
+        const products = await Transaction.getMostSoldProduct();
+        console.log(products);
+
+        res.render("statistics/mostSoldProduct", { products });
+    } catch(error) {
+        console.log(error.message);
+        res.redirect("/");
+    }
+});
+
+router.get("/mostTransactions", async (req, res) => {
+    try {
+        const products = await Transaction.getMostTransactionsDay();
+
+        res.render("statistics/mostTransactionsDay", { products });
+    } catch(error) {
+        console.log(error.message);
+        res.redirect("/");
+    }
+});
+
+router.get("/mostActiveCustomer", async (req, res) => {
+    try {
+        const customer = await Transaction.getMostActiveCustomer();
+
+        res.render("statistics/mostActiveCustomer", { customer });
+    } catch(error) {
+        console.log(error.message);
+        res.redirect("/");
+    }
+});
+
 function _dataValidation(transaction) {
     // Quantity validation
     if ((transaction.quantity.trim()).length == 0 ) throw Error("Quantity field mandatory");

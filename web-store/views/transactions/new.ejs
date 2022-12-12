@@ -1,25 +1,33 @@
-<h2>New Transaction</h2>
+<h2 class="page-header">New Transaction</h2>
 <form action="/transactions" method="POST">
 
-    <label>Card Number</label>
-    <select name="cardNumber">
-        <% for ( let i = 0; i < cardNumbers.length; i++ ) { %>
-            <option> <%= cardNumbers[i].cardNumber %> </option>
-        <% } %>
-    </select>
+    <div class="form-item">
+        <label>Card Number</label>
+        <select name="cardNumber">
+            <% for ( let i = 0; i < cardNumbers.length; i++ ) { %>
+                <option> <%= cardNumbers[i].cardNumber %> </option>
+            <% } %>
+        </select>
+    </div>
+    <div class="form-item">
+        <label>Product ID</label>
+        <select name="productId">
+            <% for ( let i = 0; i < productIds.length; i++ ) { %>
+                <option> <%= productIds[i].productId %> </option>
+            <% } %>
+        </select>
+    </div>
+    <div class="form-item">
+        <label>Quantity</label>
+        <input type="text" name="quantity" value="<%= transaction.quantity %>">
+    </div>
+    <div class="form-item">
+        <label>Date Of Transaction</label>
+        <input type="text" name="dateOfTransaction" value="<%= transaction.dateOfTransaction %>">
+    </div>
 
-    <label>Product ID</label>
-    <select name="productId">
-        <% for ( let i = 0; i < productIds.length; i++ ) { %>
-            <option> <%= productIds[i].productId %> </option>
-        <% } %>
-    </select>
-
-    <label>Quantity</label>
-    <input type="text" name="quantity" value="<%= transaction.quantity %>">
-    <label>Date Of Transaction</label>
-    <input type="text" name="dateOfTransaction" value="<%= transaction.dateOfTransaction %>">
-
-    <a href="/transactions">Cancel</a>
-    <button type="submit">Create</button>
+    <div class="form-row form-row-end">
+        <a class="btn btn-danger" href="/transactions">Cancel</a>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </div>
 </form>

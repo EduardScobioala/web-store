@@ -1,15 +1,26 @@
-<h2>New Customer</h2>
+<h2 class="page-header">New Customer</h2>
+
 <form action="/customers" method="POST">
 
-    <label>Card Number</label>
-    <input type="text" name="cardNumber" value="<%= customer.cardNumber %>">
-    <label>Last Name</label>
-    <input type="text" name="lastName" value="<%= customer.lastName %>">
-    <label>First Name</label>
-    <input type="text" name="firstName" value="<%= customer.firstName %>">
-    <label>Date of Birth</label>
-    <input type="text" name="dateOfBirth" value="<%= customer.dateOfBirth %>">
+    <div class="form-item">
+        <label>Card Number</label>
+        <input type="text" name="cardNumber" value="<%= customer.cardNumber %>">
+    </div>
+    <div class="form-item">
+        <label>Last Name</label>
+        <input type="text" name="lastName" value="<%= customer.lastName %>">
+    </div>
+    <div class="form-item">
+        <label>First Name</label>
+        <input type="text" name="firstName" value="<%= customer.firstName %>">
+    </div>
+    <div class="form-item">
+        <label>Date of Birth</label>
+        <input type="text" name="dateOfBirth" value="<%= customer.dateOfBirth %>">
+    </div>
 
-    <a href="/customers">Cancel</a>
-    <button type="submit">Create</button>
+    <div class="form-row form-row-end">
+        <a class="btn btn-danger" href="/customers">Cancel</a>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </div>
 </form>

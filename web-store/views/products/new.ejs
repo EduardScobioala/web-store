@@ -1,17 +1,29 @@
-<h2>New Product</h2>
+<h2 class="page-header">New Product</h2>
 <form action="/products" method="POST">
 
-    <label>Product ID</label>
+    <div class="form-item">
+        <label>Product ID</label>
     <input type="text" name="productId" value="<%= product.productId %>">
-    <label>Product Name</label>
+    </div>
+    <div class="form-item">
+        <label>Product Name</label>
     <input type="text" name="name" value="<%= product.name %>">
-    <label>Warranty</label>
+    </div>
+    <div class="form-item">
+        <label>Warranty</label>
     <input type="text" name="warranty" value="<%= product.warranty %>">
-    <label>Stock</label>
+    </div>
+    <div class="form-item">
+        <label>Stock</label>
     <input type="text" name="stock" value="<%= product.stock %>">
-    <label>Price</label>
+    </div>
+    <div class="form-item">
+        <label>Price</label>
     <input type="text" name="price" value="<%= product.price %>">
-
-    <a href="/products">Cancel</a>
-    <button type="submit">Create</button>
+    </div>
+    
+    <div class="form-row form-row-end">
+        <a class="btn btn-danger" href="/products">Cancel</a>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </div>
 </form>

@@ -1,16 +1,36 @@
-<h2>Search Products</h2>
+<h2 class="page-header">Search Products</h2>
 <form action="/products" method="GET">
-    <label>Name</label>
-    <input type="text" name="name" value="<%= searchOptions.name %> ">
-    <button type="submit">Search</button>
+    <div class="form-item">
+        <label>Name</label>
+        <input type="text" name="name" value="<%= searchOptions.name %> ">
+    </div>
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div> 
 </form>
 <br>
-<% for(let i = 0; i < products.length; i++) { %>
-    <div>
-       <%= products[i].productId %>
-       <%= products[i].name %>
-       <%= products[i].warranty %>
-       <%= products[i].stock %>
-       <%= products[i].price %>
-   </div>
-<% } %>
+
+<table class="styled-table centered-container">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Warranty</th>
+            <th>Stock</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let i = 0; i < products.length; i++) { %>
+            <div>
+                <tr>
+                    <td> <%= products[i].productId %> </td>
+                    <td> <%= products[i].name %> </td>
+                    <td> <%= products[i].warranty %> </td>
+                    <td> <%= products[i].stock %> </td>
+                    <td> <%= products[i].price %> </td>
+                </tr>
+            </div>
+        <% } %>
+    </tbody>
+</table>

@@ -1,8 +1,8 @@
-<h2 class="page-header">Search Transactions</h2>
-<form action="/transactions" method="GET">
+<h2 class="page-header">Personal Transaction Statistics</h2>
+<form action="/transactions/person" method="GET">
     <div class="form-item">
-        <label>Name</label>
-        <input type="text" name="productId" value="<%= searchOptions.productId %> ">
+        <label>Search by Full Name</label>
+        <input type="text" name="name" value="<%= searchOptions.name %> ">
     </div>
     <div class="form-row form-row-end">
         <button class="btn btn-primary" type="submit">Search</button>
@@ -13,20 +13,18 @@
 <table class="styled-table centered-container">
     <thead>
         <tr>
-            <th>Card Number</th>
-            <th>Product ID</th>
+            <th>Product Name</th>
             <th>Quantity</th>
-            <th>Date of Transaction</th>
+            <th>Total Value</th>
         </tr>
     </thead>
     <tbody>
         <% for(let i = 0; i < transactions.length; i++) { %>
             <div>
                 <tr>
-                    <td> <%= transactions[i].cardNumber %> </td>
-                    <td> <%= transactions[i].productId %> </td>
+                    <td> <%= transactions[i].productName %> </td>
                     <td> <%= transactions[i].quantity %> </td>
-                    <td> <%= transactions[i].dateOfTransaction %> </td>
+                    <td> <%= transactions[i].totalValue %> </td>
                 </tr>
             </div>
         <% } %>

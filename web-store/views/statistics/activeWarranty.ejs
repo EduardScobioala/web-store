@@ -1,0 +1,21 @@
+<h2 class="page-header">Active Warranty</h2>
+
+<br>
+<table class="styled-table centered-container">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Expiration Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let i = 0; i < products.length; i++) { %>
+            <div>
+                <tr>
+                    <td> <%= products[i].productName %> </td>
+                    <td> <%= products[i].expirationDate %> </td>
+                </tr>
+            </div>
+        <% } %>
+    </tbody>
+</table>
